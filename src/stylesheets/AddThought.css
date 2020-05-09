@@ -1,15 +1,11 @@
-#optionBtn {
-    /* background-color: rgb(45, 66, 97); */
-    /* background-color: rgb(76, 182, 253); */
+#thoughtCard {
     background-color: rgb(240, 240, 240);
-    width: 18rem;
+    width: 36rem;
     padding: 30px;
     padding-top: 50px;
     margin: 35px;
     border-radius: 25px;
     color: rgb(32, 32, 32);
-    /* border: 8px solid rgb(35, 49, 71); */
-    /* border: 1px solid white; */
     font-family: 'Baloo Tamma 2', cursive;
     line-height: 1.1;
     min-height: 380px;
@@ -18,7 +14,14 @@
     box-shadow: 2px 2px 6px 1px rgba(56, 56, 56, 0.5);
 }
 
-#optionBtn:hover {
-    transform: scale(1.05);
-    cursor: pointer;
+textarea[type="text"] {
+    width: 100%;
+    margin: 20px auto 10px auto;
+    resize: none;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+textarea[type="text"]:focus {
+    outline: none;
 }
