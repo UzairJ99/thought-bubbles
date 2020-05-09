@@ -12,21 +12,21 @@ import mindIcon from '../icons/mind.png';
 function WelcomePage(props) {
   return (
     <header className="App-header">
-      <h1 className="heading">Thought Bubbles</h1>
+      <h1 className="heading"><strong>Thought Bubbles</strong></h1>
       <div style={{display: 'flex', flexWrap: 'wrap', contentAlign: 'center'}}>
         <Card id="optionBtn" onClick={props.onAddThought}>
           <Card.Body>
-            <Card.Title>Add a New Thought</Card.Title>
+            <h2><strong>Add a New Thought</strong></h2>
             <Card.Text>
-            <img src={thoughtBubble} style={{width: '50%'}}></img>
+              <img alt="icon" src={thoughtBubble} style={{width: '70%'}}></img>
             </Card.Text>
           </Card.Body>
         </Card>
         <Card id="optionBtn">
           <Card.Body>
-            <Card.Title>Search My Mind</Card.Title>
+            <h2><strong>Search My Mind</strong></h2>
             <Card.Text>
-            <img src={mindIcon} style={{width: '50%'}}></img>
+              <img alt="icon" src={mindIcon} style={{width: '70%'}}></img>
             </Card.Text>
           </Card.Body>
         </Card>

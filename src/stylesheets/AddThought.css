@@ -1,10 +1,8 @@
 #thoughtCard {
     background-color: rgb(240, 240, 240);
-    width: 36rem;
-    padding: 30px;
-    padding-top: 50px;
-    margin: 35px;
+    width: 45rem;
     border-radius: 25px;
+    margin: 35px;
     color: rgb(32, 32, 32);
     font-family: 'Baloo Tamma 2', cursive;
     line-height: 1.1;
@@ -15,8 +13,9 @@
 }
 
 textarea[type="text"] {
-    width: 100%;
-    margin: 20px auto 10px auto;
+    width: 95%;
+    padding: 10px;
+    margin: 0px auto 10px auto;
     resize: none;
     font-size: 18px;
     border-radius: 5px;
@@ -24,4 +23,22 @@ textarea[type="text"] {
 
 textarea[type="text"]:focus {
     outline: none;
+}
+
+#nextBtn {
+    border-radius: 25px;
+    height: 50px;
+    min-width: 140px;
+    font-size: 25px;
+    float: right;
+    margin: 20px;
+}
+
+#backBtn {
+    border-radius: 25px;
+    height: 50px;
+    min-width: 140px;
+    font-size: 25px;
+    float: left;
+    margin: 20px;
 }
