@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background: linear-gradient(180deg, rgba(142,208,246,1) 0%, rgba(80,159,203,1) 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,4 +35,13 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+html, body {
+  height: 100%;
+}
+
+.heading {
+  font-family: 'Balsamiq Sans', cursive;
+  font-size: 65px;
 }

@@ -1,0 +1,17 @@
+#optionBtn {
+    background-color: white;
+    width: 18rem;
+    padding: 30px;
+    margin: 35px;
+    border-radius: 25px;
+    color: black;
+    font-family: 'Balsamiq Sans', cursive;
+    min-height: 380px;
+    font-size: 50px;
+    transition: all 0.1s linear;
+    box-shadow: 3px 3px 3px 1px rgba(56, 56, 56, 0.5);
+}
+
+#optionBtn:hover {
+    transform: scale(1.05);
+}
