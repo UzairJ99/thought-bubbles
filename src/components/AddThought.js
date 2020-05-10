@@ -10,31 +10,69 @@ import '../stylesheets/AddThought.css';
 
 
 function AddThought(props) {
-  const [step, setStep] = React.useState(1);
+  const [step, setStep] = React.useState("stepOne");
+  /* holds current entry at the DOM level so that the value of submission is not overwritten when rendering
+  different components */
+  const [submission, setField] = React.useState({
+    'thoughts': "",
+    'emotion': "",
+    'counterThought': ""
+  });
 
-  const handleNext = () => {
-    setStep(step + 1);
+  // save the information to the submission object
+  const saveThought = () => {
+    submission['thoughts']=document.getElementById("thought").value;
+    setField(submission);
+    setStep("stepTwo");
+  }
+  const saveEmotion = () => {
+    submission['emotion']='sad' // default to sad, change based on selected emotion
+    setField(submission);
+    setStep("stepThree");
+  }
+  const saveCounter = () => {
+    submission['counterThought']=document.getElementById("counter-thought").value;
+    setField(submission);
+    setStep("finished");
+  }
+
+  // clear current input for all fields and go back to main page
+  const handleCancel = () => {
+    setField({})
+    props.onBack();
   }
 
   // determine which component to load
   const renderStep = (step) => {
     switch(step) {
-      case 2:
+      case "stepTwo":
         return (
           <Card.Body>
             <h2><strong>How Did That Make You Feel?</strong></h2>
             {/* emojis go here */}
-            <Button id="nextBtn" onClick={()=>{ handleNext() }} variant="primary">Next</Button>
-            <Button id="backBtn" onClick={props.onBack} variant="primary">Back</Button>
+            <Button id="nextBtn" onClick={()=>{ saveEmotion() }} variant="primary">Next</Button>
+            <Button id="backBtn" onClick={()=> { handleCancel() }} variant="primary">Cancel</Button>
           </Card.Body>
         )
+      case "stepThree":
+        return (
+          <Card.Body>
+            <h2><strong>What Helps Counter This Thought?</strong></h2>
+            <p>Something positive that helps you defeat this feeling or something reassuring</p>
+            <textarea id="counter-thought" rows='10' type="text"></textarea>
+            <Button id="nextBtn" onClick={()=>{ saveCounter() }} variant="primary">Next</Button>
+            <Button id="backBtn" onClick={props.onBack} variant="primary">Cancel</Button>
+          </Card.Body>
+        )
+      case "finished":
+        return props.onBack(); // replace with making a card that says "successfully added thought"
       default:
         return (
           <Card.Body>
             <h2><strong>Add a New Thought</strong></h2>
-            <textarea rows='10' type="text"></textarea>
-            <Button id="nextBtn" onClick={()=>{ handleNext() }} variant="primary">Next</Button>
-            <Button id="backBtn" onClick={props.onBack} variant="primary">Back</Button>
+            <textarea id="thought" rows='10' type="text"></textarea>
+            <Button id="nextBtn" onClick={()=>{ saveThought() }} variant="primary">Next</Button>
+            <Button id="backBtn" onClick={props.onBack} variant="primary">Cancel</Button>
           </Card.Body>
         )
     }

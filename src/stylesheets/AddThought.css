@@ -42,3 +42,12 @@ textarea[type="text"]:focus {
     float: left;
     margin: 20px;
 }
+
+p {
+    font-size: 18px;
+}
+
+
+h2 {
+    padding: 20px 20px 0px 20px;
+}
