@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 // components
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -36,15 +37,8 @@ function AddThought(props) {
     setStep("finished");
   }
 
-  // clear current input for all fields and go back to main page
-  const handleCancel = () => {
-    setField({})
-    props.onBack();
-  }
-
   const handleUpload = () => {
     // add to database here
-
     props.onBack();
   }
 
@@ -59,7 +53,9 @@ function AddThought(props) {
             <textarea id="counter-thought" rows='10' type="text"></textarea>
             <Button id="nextBtn" onClick={()=>{ saveEmotion() }} variant="primary">Next</Button>
             <p id="stepTracker">Step 2/3</p>
-            <Button id="backBtn" onClick={()=> { handleCancel() }} variant="primary">Cancel</Button>
+            <Link to='/'>
+              <Button id="backBtn" variant="primary">Cancel</Button>
+            </Link>
           </Card.Body>
         )
       case "stepThree":
@@ -70,7 +66,9 @@ function AddThought(props) {
             <textarea id="counter-thought" rows='10' type="text"></textarea>
             <Button id="nextBtn" onClick={()=>{ saveCounter() }} variant="primary">Next</Button>
             <p id="stepTracker">Step 3/3</p>
-            <Button id="backBtn" onClick={props.onBack} variant="primary">Cancel</Button>
+            <Link to='/'>
+              <Button id="backBtn" variant="primary">Cancel</Button>
+            </Link>
           </Card.Body>
         )
       case "finished":
@@ -80,7 +78,9 @@ function AddThought(props) {
             <br></br>
             <p>You can find this thought again in the Search My Mind page.</p>
             <br></br>
-            <Button id="finishBtn" onClick={()=>{ handleUpload() }} variant="primary">Finish</Button>
+            <Link to='/'>
+              <Button id="finishBtn" variant="primary">Finish</Button>
+            </Link>
           </Card.Body>
         )
       default:
@@ -90,7 +90,9 @@ function AddThought(props) {
             <textarea id="thought" rows='10' type="text"></textarea>
             <Button id="nextBtn" onClick={()=>{ saveThought() }} variant="primary">Next</Button>
             <p id="stepTracker">Step 1/3</p>
-            <Button id="backBtn" onClick={props.onBack} variant="primary">Cancel</Button>
+            <Link to='/'>
+              <Button id="backBtn" variant="primary">Cancel</Button>
+            </Link>
           </Card.Body>
         )
     }

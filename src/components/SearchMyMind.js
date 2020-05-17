@@ -9,6 +9,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 
 const SearchMyMind = () => {
+  const thoughtList = [];
+
   return (
     <header className="App-header">
       <h1 className="heading"><strong>Thought Bubbles</strong></h1>
@@ -22,9 +24,9 @@ const SearchMyMind = () => {
         />
       </InputGroup>
 
-      <div className="card" id="thoughtsPanel">
+      <Card id="thoughtsPanel">
       {/* thought cards go here */}
-      </div>
+      </Card>
     </header>
   )
 };

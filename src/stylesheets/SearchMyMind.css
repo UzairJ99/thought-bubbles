@@ -1,6 +1,7 @@
 #thoughtsPanel {
     min-height: 400px;
     width: 70%;
+    border-radius: 25px;
 }
 
 #searchBar {
