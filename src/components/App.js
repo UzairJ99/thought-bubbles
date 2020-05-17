@@ -5,6 +5,7 @@ import '../stylesheets/App.css';
 // components
 import WelcomePage from './WelcomePage';
 import AddThought from './AddThought';
+import SearchMyMind from './SearchMyMind';
 
 function App() {
   const [page, setPage] = React.useState("welcomePage");
@@ -12,6 +13,11 @@ function App() {
   // go to add thought page
   const handleAddThought = () => {
     setPage("addThought");
+  }
+
+  // go to search page
+  const handleSearchMyMind = () => {
+    setPage("searchMyMind");
   }
 
   // go back to welcome page
@@ -25,10 +31,13 @@ function App() {
       case "welcomePage":
         return <WelcomePage 
                   onAddThought={()=>{handleAddThought()}}
+                  onSearchMyMind={()=>{handleSearchMyMind()}}
                   onBack={()=>{handleBack()}}
                 />;
       case "addThought":
         return <AddThought onBack={()=>{handleBack()}} />;
+      case "searchMyMind":
+        return <SearchMyMind onBack={()=>{handleBack()}} />;
       default:
         return <WelcomePage onAddThought={()=>{handleAddThought()}} />;
     }

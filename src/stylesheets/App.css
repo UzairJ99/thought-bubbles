@@ -45,3 +45,27 @@ html, body {
   font-family: 'Balsamiq Sans', cursive;
   font-size: 65px;
 }
+
+.btn.btn-primary {
+  background-color: rgb(71, 149, 212);
+  border-color: rgb(30, 126, 204);
+}
+
+.btn.btn-primary:hover {
+  outline: none;
+  background-color: rgb(94, 168, 230);
+  border-color: rgb(51, 147, 226);
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active {
+  outline: none!important;
+  background-color: rgb(94, 168, 230)!important;
+  border-color: rgb(51, 147, 226)!important;
+}
+
+.btn.btn-primary:focus {
+  outline: none!important;
+  background-color: rgb(94, 168, 230);
+  border-color: rgb(51, 147, 226);
+  box-shadow: none!important;
+}

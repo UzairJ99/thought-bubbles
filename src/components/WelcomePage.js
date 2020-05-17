@@ -22,7 +22,7 @@ function WelcomePage(props) {
             </Card.Text>
           </Card.Body>
         </Card>
-        <Card id="optionBtn">
+        <Card id="optionBtn" onClick={props.onSearchMyMind}>
           <Card.Body>
             <h2><strong>Search My Mind</strong></h2>
             <Card.Text>

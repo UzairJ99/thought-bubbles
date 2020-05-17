@@ -42,6 +42,12 @@ function AddThought(props) {
     props.onBack();
   }
 
+  const handleUpload = () => {
+    // add to database here
+
+    props.onBack();
+  }
+
   // determine which component to load
   const renderStep = (step) => {
     switch(step) {
@@ -50,7 +56,9 @@ function AddThought(props) {
           <Card.Body>
             <h2><strong>How Did That Make You Feel?</strong></h2>
             {/* emojis go here */}
+            <textarea id="counter-thought" rows='10' type="text"></textarea>
             <Button id="nextBtn" onClick={()=>{ saveEmotion() }} variant="primary">Next</Button>
+            <p id="stepTracker">Step 2/3</p>
             <Button id="backBtn" onClick={()=> { handleCancel() }} variant="primary">Cancel</Button>
           </Card.Body>
         )
@@ -61,17 +69,27 @@ function AddThought(props) {
             <p>Something positive that helps you defeat this feeling or something reassuring</p>
             <textarea id="counter-thought" rows='10' type="text"></textarea>
             <Button id="nextBtn" onClick={()=>{ saveCounter() }} variant="primary">Next</Button>
+            <p id="stepTracker">Step 3/3</p>
             <Button id="backBtn" onClick={props.onBack} variant="primary">Cancel</Button>
           </Card.Body>
         )
       case "finished":
-        return props.onBack(); // replace with making a card that says "successfully added thought"
+        return (
+          <Card.Body>
+            <h2><strong><i style={{marginRight: '10px'}} className="far fa-check-circle"></i>Thought Complete</strong></h2>
+            <br></br>
+            <p>You can find this thought again in the Search My Mind page.</p>
+            <br></br>
+            <Button id="finishBtn" onClick={()=>{ handleUpload() }} variant="primary">Finish</Button>
+          </Card.Body>
+        )
       default:
         return (
           <Card.Body>
             <h2><strong>Add a New Thought</strong></h2>
             <textarea id="thought" rows='10' type="text"></textarea>
             <Button id="nextBtn" onClick={()=>{ saveThought() }} variant="primary">Next</Button>
+            <p id="stepTracker">Step 1/3</p>
             <Button id="backBtn" onClick={props.onBack} variant="primary">Cancel</Button>
           </Card.Body>
         )
