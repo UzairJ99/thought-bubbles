@@ -1,0 +1,9 @@
+.menuButton {
+    width: 30%;
+    height: 70px;
+    box-shadow: -2px 2px 1px 1px rgba(54, 54, 54, 0.5);
+}
+
+.menu {
+    width: 100%;
+}

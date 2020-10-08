@@ -1,0 +1,32 @@
+#optionBtn {
+    background-color: rgb(240, 240, 240);
+    width: 18rem;
+    padding: 10px;
+    margin: 35px;
+    border-radius: 25px;
+    color: rgb(32, 32, 32);
+    font-family: 'Baloo Tamma 2', cursive;
+    line-height: 1.1;
+    min-height: 380px;
+    font-size: 50px;
+    transition: all 0.1s linear;
+    box-shadow: 2px 2px 6px 1px rgba(56, 56, 56, 0.5);
+}
+
+.card.title {
+    font-size: 30px;
+}
+
+#optionBtn:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.logoffBtn {
+    top: 30px;
+    right: 30px;
+}
+
+h2 {
+    padding: 20px;
+}
