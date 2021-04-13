@@ -15,13 +15,17 @@ import mad from '../images/emotion faces/mad.png';
 import stressed from '../images/emotion faces/stressed.png';
 import happy from '../images/emotion faces/Happy face.png';
 import cloudGroup1 from '../images/clouds/cloud group .png';
+// back end
+import {withFirebase} from './Firebase/index';
+import * as ROUTES from '../constants/routes';
+import {withRouter} from 'react-router-dom';
 
 /*
 This component allows a user to enter a new thought.
 It walks them through a step by step process where each step is stored in the app's state.
 Connects to Firebase to upload a new entry upon completion of the steps.
 */
-function AddThought(props) {
+function SubmitThought(props) {
   const [step, setStep] = React.useState("stepOne");
   /* holds current entry at the DOM level so that the value of submission is not overwritten when rendering
   different components */
@@ -50,11 +54,19 @@ function AddThought(props) {
     }
   }
   const saveEmotion = () => {
+    // default to sad, change based on selected emotion
     if (submission['emotion']==="") {
-      submission['emotion']='sad' // default to sad, change based on selected emotion
+      submission['emotion']='sad' 
       setField(submission);
     }
-    setStep("stepThree");
+    // when the user selects a happy emotion, there shouldn't be a counter to it
+    if (submission['emotion']==='happy') {
+      submission['counterThought']='N/A';
+      setField(submission)
+      setStep("finished");
+    } else {
+      setStep("stepThree");
+    }
   }
   const saveCounter = () => {
     if (document.getElementById("counter-thought").value !== "") {
@@ -64,9 +76,17 @@ function AddThought(props) {
     }
   }
 
+  // add to database here
   const handleUpload = () => {
-    // add to database here
-    console.log(submission);
+    // replace signout functionality with database upload functions
+    props.firebase.doUpload(submission)
+    .then(() => {
+      console.log(submission);
+      props.history.push(ROUTES.WELCOME);
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }
 
   const selectEmotion = (emotion) => {
@@ -99,20 +119,21 @@ function AddThought(props) {
             </div>
             <Button id="nextBtn" onClick={()=>{ saveEmotion() }} variant="primary">Next</Button>
             <p id="stepTracker">Step 2/3</p>
-            <Link to='/menu'>
+            <Link to={ROUTES.WELCOME}>
               <Button id="backBtn" variant="primary">Cancel</Button>
             </Link>
           </Card.Body>
         )
       case "stepThree":
         return (
+          // this step can be skipped if the user selected the happy emotion
           <Card.Body>
             <h2><strong>What's something positive you thought of today?</strong></h2>
             <p>Something positive that helps you defeat this negative feeling OR something reassuring</p>
             <textarea id="counter-thought" rows='10' type="text"></textarea>
             <Button id="nextBtn" onClick={()=>{ saveCounter() }} variant="primary">Next</Button>
             <p id="stepTracker">Step 3/3</p>
-            <Link to='/menu'>
+            <Link to={ROUTES.WELCOME}>
               <Button id="backBtn" variant="primary">Cancel</Button>
             </Link>
           </Card.Body>
@@ -124,7 +145,7 @@ function AddThought(props) {
             <br></br>
             <p>You can find this thought again in the Search My Mind page.</p>
             <br></br>
-            <Link to='/menu'>
+            <Link to={ROUTES.WELCOME}>
               <Button id="finishBtn" onClick={()=>handleUpload()} variant="primary">Finish</Button>
             </Link>
           </Card.Body>
@@ -136,7 +157,7 @@ function AddThought(props) {
             <textarea id="thought" rows='10' type="text"></textarea>
             <Button id="nextBtn" onClick={()=>{ saveThought() }} variant="primary">Next</Button>
             <p id="stepTracker">Step 1/3</p>
-            <Link to='/menu'>
+            <Link to={ROUTES.WELCOME}>
               <Button id="backBtn" variant="primary">Cancel</Button>
             </Link>
           </Card.Body>
@@ -156,4 +177,7 @@ function AddThought(props) {
   )
 }
 
-export default AddThought;
+const AddThought = withRouter(withFirebase(SubmitThought));
+
+export default SubmitThought;
+export {AddThought};

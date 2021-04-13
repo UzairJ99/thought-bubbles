@@ -40,6 +40,17 @@ class Firebase {
         return authUser;
     }
 
+    // upload a submission to the database
+    doUpload = (submission) => {
+        db.collection(authUser).add(submission)
+        .then((docRef) => {
+            console.log("Document written with ID: ", docRef.id);
+        })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+        });
+    }
+
 }
 
 export default Firebase;

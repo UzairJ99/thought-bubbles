@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 // components
 import WelcomePage from './WelcomePage';
-import AddThought from './AddThought';
+import {AddThought} from './SubmitThought';
 import SearchMyMind from './SearchMyMind';
 import LoginPage from './LoginPage';
 import LandingPage from './LandingPage';
