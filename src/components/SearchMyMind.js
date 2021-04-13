@@ -7,11 +7,17 @@ import Card from 'react-bootstrap/Card';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import LogoHeader from './LogoHeader';
+// images
+import sad from '../images/emotion faces/sad face.png';
+import depressed from '../images/emotion faces/depressed face.png';
+import mad from '../images/emotion faces/mad.png';
+import stressed from '../images/emotion faces/stressed.png';
+import happy from '../images/emotion faces/Happy face.png';
 
 /*
 This component renders search results from previous entries of thoughts.
 Connects to Firebase to pull requested data.
-Can be fitered using text or emotion.
+Can be filtered using text or emotion.
 State of application is based on search bar entry.
 Thoughts can also be deleted from here (still need to implement this).
 */
@@ -38,11 +44,11 @@ const SearchMyMind = () => {
   Will be smaller emoji versions of the addThought panel.
   */
   const emojis = {
-    sad: '', // replace value with image like { Sad } from import
-    angry: '',
-    anxious: '',
-    envious: '',
-    stressed: ''
+    sad: sad,
+    angry: mad,
+    depressed: depressed,
+    happy: happy,
+    stressed: stressed
   }
 
   return (
@@ -72,9 +78,16 @@ const SearchMyMind = () => {
           } else return null; // might take out
         }).map((bubble)=>
           <Card id="thoughtBubble">
-            <h4>
+            {/* emoji for top left corner to depict thought bubble */}
+            <img 
+                src={emojis[bubble.emotion]} 
+                style={{width:'64px', float:'left', marginLeft:'-32px', marginTop:'-32px', zIndex: 1}}>
+            </img>
+            {/* heading for emotion card */}
+            <h4 style={{marginTop: '-32px'}}>
               {bubble.emotion}
             </h4>
+            <p></p>
             {/* need to add delete functionality here */}
             <h5 style={{textAlign:'left', marginLeft: '20px'}}><span role='img'>🤔</span> Thought</h5>
             <p style={{textAlign:'left', marginLeft: '20px'}}> {bubble.thought}</p>
