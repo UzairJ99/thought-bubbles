@@ -8,6 +8,13 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import LogoHeader from './LogoHeader';
 
+/*
+This component renders search results from previous entries of thoughts.
+Connects to Firebase to pull requested data.
+Can be fitered using text or emotion.
+State of application is based on search bar entry.
+Thoughts can also be deleted from here (still need to implement this).
+*/
 const SearchMyMind = () => {
   // search term
   const [searchWord, setSearch] = React.useState("");
@@ -26,9 +33,12 @@ const SearchMyMind = () => {
     }
   ];
 
-  // dictionary for mapping emotions to emojis for display at top corner of each thought bubble
+  /*
+  dictionary for mapping emotions to emojis for display at top corner of each thought bubble.
+  Will be smaller emoji versions of the addThought panel.
+  */
   const emojis = {
-    sad: '', // replace value with image like { Sad }
+    sad: '', // replace value with image like { Sad } from import
     angry: '',
     anxious: '',
     envious: '',
@@ -57,9 +67,7 @@ const SearchMyMind = () => {
       {
         // display filtered results
         thoughtList.filter((bubble) => {
-          if (bubble.emotion.includes(searchWord)) {
-            return bubble;
-          } else if (searchWord === "") {
+          if (bubble.emotion.includes(searchWord) || (searchWord === "")) {
             return bubble;
           } else return null; // might take out
         }).map((bubble)=>
@@ -67,6 +75,7 @@ const SearchMyMind = () => {
             <h4>
               {bubble.emotion}
             </h4>
+            {/* need to add delete functionality here */}
             <h5 style={{textAlign:'left', marginLeft: '20px'}}><span role='img'>🤔</span> Thought</h5>
             <p style={{textAlign:'left', marginLeft: '20px'}}> {bubble.thought}</p>
             <h5 style={{textAlign:'left', marginLeft: '20px'}}><span role='img'>😄</span> Counter</h5>

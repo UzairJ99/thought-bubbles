@@ -16,7 +16,11 @@ import stressed from '../images/emotion faces/stressed.png';
 import happy from '../images/emotion faces/Happy face.png';
 import cloudGroup1 from '../images/clouds/cloud group .png';
 
-
+/*
+This component allows a user to enter a new thought.
+It walks them through a step by step process where each step is stored in the app's state.
+Connects to Firebase to upload a new entry upon completion of the steps.
+*/
 function AddThought(props) {
   const [step, setStep] = React.useState("stepOne");
   /* holds current entry at the DOM level so that the value of submission is not overwritten when rendering
@@ -31,7 +35,12 @@ function AddThought(props) {
   const emotionList = [sad, depressed, mad, stressed, happy];
   const emotionStringList = ['sad', 'depressed', 'mad', 'stressed', 'happy'];
 
-
+  /*
+  below functions are for saving different user inputs depending on the step.
+  each one modifies the state of the application as well as the input field before uploading to the
+  database.
+  */
+ 
   // save the information to the submission object
   const saveThought = () => {
     if (document.getElementById("thought").value !== "") {
@@ -73,7 +82,10 @@ function AddThought(props) {
     setField(submission);
   }
 
-  // determine which component to load
+  /*
+  determine which step component to load
+  might be able to refactor this later on to create seperate component jsx files for each step.
+  */
   const renderStep = (step) => {
     switch(step) {
       case "stepTwo":
