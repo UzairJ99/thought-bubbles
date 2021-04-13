@@ -14,7 +14,6 @@ import depressed from '../images/emotion faces/depressed face.png';
 import mad from '../images/emotion faces/mad.png';
 import stressed from '../images/emotion faces/stressed.png';
 import happy from '../images/emotion faces/Happy face.png';
-import cloudGroup1 from '../images/clouds/cloud group .png';
 // back end
 import {withFirebase} from './Firebase/index';
 import * as ROUTES from '../constants/routes';
@@ -27,6 +26,7 @@ Connects to Firebase to upload a new entry upon completion of the steps.
 */
 function SubmitThought(props) {
   const [step, setStep] = React.useState("stepOne");
+  const [user, setUser] = React.useState(props.authUser);
   /* holds current entry at the DOM level so that the value of submission is not overwritten when rendering
   different components */
   const [submission, setField] = React.useState({
@@ -79,9 +79,9 @@ function SubmitThought(props) {
   // add to database here
   const handleUpload = () => {
     // replace signout functionality with database upload functions
-    props.firebase.doUpload(submission)
+    props.firebase.doUpload(submission, user.authUser.email)
     .then(() => {
-      console.log(submission);
+      console.log('successfully uploaded to database.');
       props.history.push(ROUTES.WELCOME);
     })
     .catch(error => {

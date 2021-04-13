@@ -45,10 +45,10 @@ const App = (props) => {
             }
           </Route>
           <Route path={ROUTES.ADD}>
-            <AddThought />
+            <AddThought authUser={authUser}/>
           </Route>
           <Route path={ROUTES.SEARCH}>
-            <SearchMyMind />
+            <SearchMyMind authUser={authUser}/>
           </Route>
           <Route path={ROUTES.SIGNIN}>
             <LoginPage/>

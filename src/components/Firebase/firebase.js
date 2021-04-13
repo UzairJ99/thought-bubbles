@@ -1,5 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -18,6 +19,7 @@ class Firebase {
         app.initializeApp(firebaseConfig);
 
         this.auth = app.auth();
+        this.db = app.firestore();
     }
 
     /*****authentication API from Firebase*****/
@@ -41,8 +43,8 @@ class Firebase {
     }
 
     // upload a submission to the database
-    doUpload = (submission) => {
-        db.collection(authUser).add(submission)
+    doUpload = (submission, user) => {
+        this.db.collection(user).add(submission)
         .then((docRef) => {
             console.log("Document written with ID: ", docRef.id);
         })
