@@ -8,11 +8,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import LogoHeader from './LogoHeader';
 // images
-import sad from '../images/emotion faces/sad face.png';
-import depressed from '../images/emotion faces/depressed face.png';
-import mad from '../images/emotion faces/mad.png';
-import stressed from '../images/emotion faces/stressed.png';
-import happy from '../images/emotion faces/Happy face.png';
+import * as IMAGES from '../constants/images';
 
 /*
 This component renders search results from previous entries of thoughts.
@@ -44,11 +40,11 @@ const SearchMyMind = () => {
   Will be smaller emoji versions of the addThought panel.
   */
   const emojis = {
-    sad: sad,
-    angry: mad,
-    depressed: depressed,
-    happy: happy,
-    stressed: stressed
+    sad: IMAGES.sad,
+    angry: IMAGES.mad,
+    depressed: IMAGES.depressed,
+    happy: IMAGES.happy,
+    stressed: IMAGES.stressed
   }
 
   return (

@@ -9,11 +9,7 @@ import '../stylesheets/App.css';
 import '../stylesheets/WelcomePage.css';
 import '../stylesheets/AddThought.css';
 // images
-import sad from '../images/emotion faces/sad face.png';
-import depressed from '../images/emotion faces/depressed face.png';
-import mad from '../images/emotion faces/mad.png';
-import stressed from '../images/emotion faces/stressed.png';
-import happy from '../images/emotion faces/Happy face.png';
+import * as IMAGES from '../constants/images';
 // back end
 import {withFirebase} from './Firebase/index';
 import * as ROUTES from '../constants/routes';
@@ -26,7 +22,6 @@ Connects to Firebase to upload a new entry upon completion of the steps.
 */
 function SubmitThought(props) {
   const [step, setStep] = React.useState("stepOne");
-  const [user, setUser] = React.useState(props.authUser);
   /* holds current entry at the DOM level so that the value of submission is not overwritten when rendering
   different components */
   const [submission, setField] = React.useState({
@@ -36,7 +31,7 @@ function SubmitThought(props) {
   });
 
   // emotions
-  const emotionList = [sad, depressed, mad, stressed, happy];
+  const emotionList = [IMAGES.sad, IMAGES.depressed, IMAGES.mad, IMAGES.stressed, IMAGES.happy];
   const emotionStringList = ['sad', 'depressed', 'mad', 'stressed', 'happy'];
 
   /*
@@ -78,8 +73,9 @@ function SubmitThought(props) {
 
   // add to database here
   const handleUpload = () => {
-    // replace signout functionality with database upload functions
-    props.firebase.doUpload(submission, user.authUser.email)
+    // authUser object is kind of weird, contains the structure of authUser.authUser.otherProperties
+    let user = props.authUser.authUser.email;
+    props.firebase.doUpload(submission, user)
     .then(() => {
       console.log('successfully uploaded to database.');
       props.history.push(ROUTES.WELCOME);

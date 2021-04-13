@@ -51,6 +51,8 @@ class Firebase {
         .catch((error) => {
             console.error("Error adding document: ", error);
         });
+
+        return true;
     }
 
 }
