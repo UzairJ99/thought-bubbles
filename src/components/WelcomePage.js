@@ -45,10 +45,6 @@ const WelcomePage = (props) => {
         }}>
       </img>
 
-      {/* log off functionality
-      <FirebaseContext.Consumer>
-        {firebase => <LogOff firebase={firebase} /> }
-      </FirebaseContext.Consumer> */}
       <LogOff />
       
       <h1 className="heading" style={{zIndex: '2'}}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 // components
 import LogoHeader from './LogoHeader';
@@ -22,6 +22,7 @@ Connects to Firebase to upload a new entry upon completion of the steps.
 */
 function SubmitThought(props) {
   const [step, setStep] = React.useState("stepOne");
+  const [authUser, setAuthUser] = React.useState(props.authUser);
   /* holds current entry at the DOM level so that the value of submission is not overwritten when rendering
   different components */
   const [submission, setField] = React.useState({
@@ -33,6 +34,19 @@ function SubmitThought(props) {
   // emotions
   const emotionList = [IMAGES.sad, IMAGES.depressed, IMAGES.mad, IMAGES.stressed, IMAGES.happy];
   const emotionStringList = ['sad', 'depressed', 'mad', 'stressed', 'happy'];
+
+  // check for change in user - force log out if user becomes null
+  useEffect(() => {
+    props.firebase.auth.onAuthStateChanged(authUser => {
+      authUser
+        ? setAuthUser({ authUser })
+        : setAuthUser({ authUser: null });
+    });
+
+    if (authUser === null) {
+      props.history.push(ROUTES.SIGNIN);
+    }
+  }, []);
 
   /*
   below functions are for saving different user inputs depending on the step.
@@ -76,8 +90,7 @@ function SubmitThought(props) {
     // authUser object is kind of weird, contains the structure of authUser.authUser.otherProperties
     let user = props.authUser.authUser.email;
     props.firebase.doUpload(submission, user)
-    .then(() => {
-      console.log('successfully uploaded to database.');
+    .then((docRef) => {
       props.history.push(ROUTES.WELCOME);
     })
     .catch(error => {

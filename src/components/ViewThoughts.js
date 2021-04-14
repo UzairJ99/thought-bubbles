@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 // stylesheets
 import '../stylesheets/App.css';
 import '../stylesheets/SearchMyMind.css';
@@ -9,6 +9,10 @@ import FormControl from 'react-bootstrap/FormControl';
 import LogoHeader from './LogoHeader';
 // images
 import * as IMAGES from '../constants/images';
+// back end
+import {withFirebase} from './Firebase/index';
+import * as ROUTES from '../constants/routes';
+import {withRouter} from 'react-router-dom';
 
 /*
 This component renders search results from previous entries of thoughts.
@@ -17,23 +21,53 @@ Can be filtered using text or emotion.
 State of application is based on search bar entry.
 Thoughts can also be deleted from here (still need to implement this).
 */
-const SearchMyMind = () => {
+const ViewThoughts = (props) => {
   // search term
   const [searchWord, setSearch] = React.useState("");
-
-  // sample data - replace with real data from user
-  const thoughtList = [
+  const [authUser, setAuthUser] = React.useState(props.authUser);
+  const initialList = [
     {
-      emotion: 'sad',
-      thought: 'blah blah blah blah blah',
-      counter: 'i dunno'
-    },
-    {
-      emotion: 'happy',
-      thought: 'wwwoooooahhhhhhhhh',
-      counter: 'hahhahah'
+      thoughts: '',
+      emotion: '',
+      counterThought: ''
     }
   ];
+  const [thoughtList, setThoughtList] = React.useState(initialList);
+  
+  // check for change in user - force log out if user becomes null
+  useEffect(() => {
+    props.firebase.auth.onAuthStateChanged(authUser => {
+      authUser
+        ? setAuthUser({ authUser })
+        : setAuthUser({ authUser: null });
+    });
+
+    if (authUser === null) {
+      props.history.push(ROUTES.SIGNIN);
+    } else {
+      // only pull data on component mount and if the user is logged in
+      getThoughts();
+    }
+  }, []);
+
+  const user = authUser ? props.authUser.authUser.email : null;
+
+  // pull data from database
+  const getThoughts = () => {
+    props.firebase.getThoughts(user)
+    .then((query) => {
+      let data = [];
+      query.forEach((doc) => {
+        data.push(doc.data());
+      })
+      console.log(data);
+      setThoughtList(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+  
 
   /*
   dictionary for mapping emotions to emojis for display at top corner of each thought bubble.
@@ -41,7 +75,7 @@ const SearchMyMind = () => {
   */
   const emojis = {
     sad: IMAGES.sad,
-    angry: IMAGES.mad,
+    mad: IMAGES.mad,
     depressed: IMAGES.depressed,
     happy: IMAGES.happy,
     stressed: IMAGES.stressed
@@ -69,7 +103,12 @@ const SearchMyMind = () => {
       {
         // display filtered results
         thoughtList.filter((bubble) => {
-          if (bubble.emotion.includes(searchWord) || (searchWord === "")) {
+          // conditions for searching
+          const cond1 = bubble.emotion.includes(searchWord);
+          const cond2 = bubble.thoughts.includes(searchWord);
+          const cond3 = bubble.counterThought.includes(searchWord);
+
+          if (cond1 || cond2 || cond3 || (searchWord === "")) {
             return bubble;
           } else return null; // might take out
         }).map((bubble)=>
@@ -86,9 +125,9 @@ const SearchMyMind = () => {
             <p></p>
             {/* need to add delete functionality here */}
             <h5 style={{textAlign:'left', marginLeft: '20px'}}><span role='img'>🤔</span> Thought</h5>
-            <p style={{textAlign:'left', marginLeft: '20px'}}> {bubble.thought}</p>
+            <p style={{textAlign:'left', marginLeft: '20px'}}> {bubble.thoughts}</p>
             <h5 style={{textAlign:'left', marginLeft: '20px'}}><span role='img'>😄</span> Counter</h5>
-            <p style={{textAlign:'left', marginLeft: '20px'}}> {bubble.counter}</p>
+            <p style={{textAlign:'left', marginLeft: '20px'}}> {bubble.counterThought}</p>
           </Card>
         )
       }
@@ -97,4 +136,7 @@ const SearchMyMind = () => {
   )
 };
 
-export default SearchMyMind;
+const SearchMyMind = withRouter(withFirebase(ViewThoughts));
+
+export default ViewThoughts;
+export {SearchMyMind}

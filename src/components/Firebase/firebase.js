@@ -44,15 +44,14 @@ class Firebase {
 
     // upload a submission to the database
     doUpload = (submission, user) => {
-        this.db.collection(user).add(submission)
-        .then((docRef) => {
-            console.log("Document written with ID: ", docRef.id);
-        })
-        .catch((error) => {
-            console.error("Error adding document: ", error);
-        });
+        var docRef = this.db.collection(user).add(submission);
+        return docRef;
+    }
 
-        return true;
+    // retrieve all previous thoughts from database
+    getThoughts = (user) => {
+        var query = this.db.collection(user).get();
+        return query;
     }
 
 }

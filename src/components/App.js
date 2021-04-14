@@ -10,7 +10,7 @@ import {
 // components
 import WelcomePage from './WelcomePage';
 import {AddThought} from './SubmitThought';
-import SearchMyMind from './SearchMyMind';
+import {SearchMyMind} from './ViewThoughts';
 import LoginPage from './LoginPage';
 import LandingPage from './LandingPage';
 import RegisterPage from './RegisterPage';
